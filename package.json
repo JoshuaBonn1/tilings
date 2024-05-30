@@ -2,7 +2,7 @@
   "name": "tilings",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://JoshuaBonn1.github.io/tilings",
+  "homepage": "https://joshuabonn1.github.io/tilings",
   "type": "module",
   "scripts": {
     "dev": "vite",
