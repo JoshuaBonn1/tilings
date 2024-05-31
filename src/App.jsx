@@ -160,14 +160,41 @@ function App() {
 
     for (let i = 0; i < fundRegionTiles.length; i++) {
         fundRegionTiles[i] = scale(fundRegionTiles[i], 0, 0, 20);
-        fundRegionTiles[i] = translate(fundRegionTiles[i], 50, 50);
+    }
+
+    // offsets go in two directions
+    // offsets = [offsetX1, offsetY1, offsetX2, offsetY2]
+    // any number of 1 offsets and any number of 2 offsets can be used
+    const offsets = [
+        fundRegionTiles[0][2][0] - fundRegionTiles[5][2][0],
+        fundRegionTiles[0][2][1] - fundRegionTiles[5][2][1],
+        fundRegionTiles[2][0][0] - fundRegionTiles[7][0][0],
+        fundRegionTiles[2][0][1] - fundRegionTiles[7][0][1],
+    ]
+
+    console.log(offsets)
+
+    let allTiles = [];
+    // create the tiling by translating the tiles by the offsets
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            for (let k = 0; k < fundRegionTiles.length; k++) {
+                let tile = fundRegionTiles[k];
+                tile = translate(tile, i * offsets[0] + j * offsets[2], i * offsets[1] + j * offsets[3]);
+                allTiles.push(tile);
+            }
+        }
+    }
+
+    for (let i = 0; i < allTiles.length; i++) {
+        allTiles[i] = translate(allTiles[i], 100, 200);
     }
 
 
     // Convert to shapes that work with Display
     const shapes = [];
-    for (let i = 0; i < fundRegionTiles.length; i++) {
-        const tile = fundRegionTiles[i];
+    for (let i = 0; i < allTiles.length; i++) {
+        const tile = allTiles[i];
         const shape = {
             points: () => tile.map(([x, y]) => `${x},${y}`).join(" "),
         };
